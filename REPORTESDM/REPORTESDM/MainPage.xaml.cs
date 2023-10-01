@@ -8,7 +8,6 @@ namespace TuAppXamarin
 {
     public partial class MainPage : ContentPage
     {
-
         private Dictionary<string, string> DIAS = new Dictionary<string, string>
         {
             { "Lunes", "L" },
@@ -48,7 +47,7 @@ namespace TuAppXamarin
                 }
 
                 using (SQLiteConnection conn = new SQLiteConnection(path))
-                {   
+                {
                     //cuenta los clientes con venta segun DB
                     var clientes = conn.Query<VisitaDocumento>("SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ?", fechaBuscada + "%");
                     int cuentaClientes = clientes.Count;
@@ -70,12 +69,12 @@ namespace TuAppXamarin
                                "(SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?) as 'ClientesRutero', " +
                                $"ROUND((SELECT COUNT(*) FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%' AND CLIENTE IN (SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%')) * 100.0 / (SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?), 2) || '%' as 'EfectividadVTA', " +
                                "(SELECT COUNT(*) FROM ERPADMIN_VISITA WHERE INICIO LIKE ? || '%') as 'VisitasRealizadas', " +
-                               $"ROUND((SELECT COUNT(*) FROM ERPADMIN_VISITA WHERE INICIO LIKE ? || '%' AND CLIENTE IN (SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%')) * 100.0 / (SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?), 2) || '%' as 'EfectividadVisita', "+
+                               $"ROUND((SELECT COUNT(*) FROM ERPADMIN_VISITA WHERE INICIO LIKE ? || '%' AND CLIENTE IN (SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%')) * 100.0 / (SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?), 2) || '%' as 'EfectividadVisita', " +
                                "(SELECT COUNT(CLIENTE) FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%') as 'ClientesVenta' " +
                                "FROM ERPADMIN_JORNADA_RUTAS";
                     var datosRutas = conn.Query<JornadaRutas>(consulta, fechaBuscada, fechaBuscada, letraDia, fechaBuscada, fechaBuscada, letraDia, fechaBuscada, fechaBuscada, letraDia, fechaBuscada);
 
-                    
+
                     data = "";
                     foreach (var ruta in datosRutas)
                     {
@@ -139,7 +138,7 @@ namespace TuAppXamarin
         public int ClientesVenta { get; set; }
         public int VisitasRealizadas { get; set; }
         public string Monto { get; set; }
-        public string EfectividadVTA { get; set; }  
+        public string EfectividadVTA { get; set; }
         public string EfectividadVisita { get; set; }
     }
     public static class StringExtensions
