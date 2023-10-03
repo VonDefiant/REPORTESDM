@@ -10,6 +10,7 @@
     <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Padding="20">
         <Image Source="logo.png" Aspect="AspectFit" WidthRequest="250" HeightRequest="200"/>
         <DatePicker x:Name="FechaDatePicker"></DatePicker>
+
         <Button Text="Generar" Clicked="OnGenerarButtonClicked"></Button>
         <Label x:Name="DataLabel" FontSize="15" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
         <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" />
