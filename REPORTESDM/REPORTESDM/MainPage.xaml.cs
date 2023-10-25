@@ -4,6 +4,7 @@ using System.IO;
 using SQLite;
 using Xamarin.Forms;
 
+
 namespace TuAppXamarin
 {
     public partial class MainPage : ContentPage
@@ -23,7 +24,6 @@ namespace TuAppXamarin
         private string[] diasSemana = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
 
         private string data = "";
-
         public MainPage()
         {
             InitializeComponent();
