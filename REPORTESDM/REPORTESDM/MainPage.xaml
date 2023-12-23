@@ -11,6 +11,14 @@
         <Image Source="logo.png" Aspect="AspectFit" WidthRequest="180" HeightRequest="140"/>
         <DatePicker x:Name="FechaDatePicker" TextColor="White"></DatePicker>
 
+        <!-- Agregamos un Picker para seleccionar el tipo de informe -->
+        <Picker x:Name="TipoInformePicker" Title="Seleccione un tipo de informe">
+            <Picker.Items>
+                <x:String>Efectividad</x:String>
+                <!-- Agrega más tipos de informes según sea necesario -->
+            </Picker.Items>
+        </Picker>
+
         <Button Text="Generar" TextColor="White" Clicked="OnGenerarButtonClicked"></Button>
         <Label x:Name="DataLabel" TextColor="White" FontSize="19" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
         <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" />
