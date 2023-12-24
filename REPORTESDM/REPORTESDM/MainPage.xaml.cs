@@ -7,6 +7,7 @@ namespace TuAppXamarin
     public partial class MainPage : ContentPage
     {
         private efectivreport efectReport;
+        private ResMxFamReport resMxFamReport; // Agregado
 
         public MainPage()
         {
@@ -22,8 +23,8 @@ namespace TuAppXamarin
             }
 
             efectReport = new efectivreport(filePath);
+            resMxFamReport = new ResMxFamReport(filePath); // Agregado
         }
-
 
         private void OnGenerarButtonClicked(object sender, EventArgs e)
         {
@@ -35,11 +36,23 @@ namespace TuAppXamarin
 
             // Obtener el tipo de informe seleccionado
             string tipoInforme = TipoInformePicker.SelectedItem?.ToString();
+            string companiadm = "DISMOGT";
 
             if (!string.IsNullOrEmpty(tipoInforme))
             {
-                // Llamar al método en la nueva clase con el tipo de informe
-                efectReport.ActualizarDatos(fechaBuscada, DataLabel, ErrorLabel, tipoInforme);
+                // Seleccionar el informe según el tipo
+                switch (tipoInforme)
+                {
+                    case "Efectividad":
+                        efectReport.ActualizarDatos(fechaBuscada, DataLabel, ErrorLabel, tipoInforme);
+                        break;
+                    case "Venta por familia": 
+                        resMxFamReport.GenerarReporte(DataLabel, ErrorLabel, fechaBuscada, companiadm);
+                        break;
+                    default:
+                        ErrorLabel.Text = "Tipo de informe no reconocido";
+                        break;
+                }
             }
             else
             {

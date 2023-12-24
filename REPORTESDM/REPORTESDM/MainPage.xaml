@@ -12,9 +12,10 @@
         <DatePicker x:Name="FechaDatePicker" TextColor="White"></DatePicker>
 
         <!-- Agregamos un Picker para seleccionar el tipo de informe -->
-        <Picker x:Name="TipoInformePicker" Title="Seleccione un tipo de informe">
+        <Picker x:Name="TipoInformePicker" Title="Seleccione un tipo de informe" TextColor="White">
             <Picker.Items>
                 <x:String>Efectividad</x:String>
+                <x:String>Venta por familia</x:String>
                 <!-- Agrega más tipos de informes según sea necesario -->
             </Picker.Items>
         </Picker>
