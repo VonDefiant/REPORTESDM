@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using TuAppXamarin;  // Asegúrate de tener la referencia correcta al espacio de nombres
 
 namespace REPORTESDM
 {
@@ -10,7 +11,7 @@ namespace REPORTESDM
         {
             InitializeComponent();
 
-            MainPage = new TuAppXamarin.MainPage();
+            MainPage = new NavigationPage(new MainPage());  // Envuelve MainPage en NavigationPage
         }
 
         protected override void OnStart()

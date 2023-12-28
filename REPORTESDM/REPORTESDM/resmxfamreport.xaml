@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TuAppXamarin.ResMxFamReportPage">
+
+    <ContentPage.BackgroundImageSource>
+        <FileImageSource File="background.png" />
+    </ContentPage.BackgroundImageSource>
+
+    <StackLayout>
+        <!-- Encabezado de la tabla -->
+        <Grid>
+            <Label Text="COD" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+            <Label Text="DESCRIPCION" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+            <Label Text="UNIDADES" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+            <Label Text="VENTA" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+            <Label Text="COBERTURAS" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+        </Grid>
+
+        <!-- Contenido de la tabla -->
+        <ListView x:Name="ReportListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Label Text="{Binding COD_FAM}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding DESCRIPCION}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding UNIDADES}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding VENTA}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding NUMERO_CLIENTES}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding Source={x:Reference Name=ThisPage}, Path=BindingContext._fechaBuscada, StringFormat='Fecha: {0:d/M/yyyy}'}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

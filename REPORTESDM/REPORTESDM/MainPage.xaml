@@ -20,9 +20,10 @@
             </Picker.Items>
         </Picker>
 
-        <Button Text="Generar" TextColor="White" Clicked="OnGenerarButtonClicked"></Button>
-        <Label x:Name="DataLabel" TextColor="White" FontSize="19" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
-        <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" />
+    <Button Text="Generar" TextColor="White" Clicked="OnGenerarButtonClicked"></Button>
+    <Label x:Name="DataLabel" TextColor="White" FontSize="16" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
+    <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" />
+
     </StackLayout>
 
 </ContentPage>

@@ -7,7 +7,7 @@ namespace TuAppXamarin
     public partial class MainPage : ContentPage
     {
         private efectivreport efectReport;
-        private ResMxFamReport resMxFamReport; // Agregado
+        private ResMxFamReport resMxFamReport;
 
         public MainPage()
         {
@@ -23,10 +23,10 @@ namespace TuAppXamarin
             }
 
             efectReport = new efectivreport(filePath);
-            resMxFamReport = new ResMxFamReport(filePath); // Agregado
+            resMxFamReport = new ResMxFamReport(filePath);
         }
 
-        private void OnGenerarButtonClicked(object sender, EventArgs e)
+        private async void OnGenerarButtonClicked(object sender, EventArgs e)
         {
             // Obtener la fecha seleccionada del DatePicker
             DateTime fechaSeleccionada = FechaDatePicker.Date;
@@ -37,6 +37,7 @@ namespace TuAppXamarin
             // Obtener el tipo de informe seleccionado
             string tipoInforme = TipoInformePicker.SelectedItem?.ToString();
             string companiadm = "DISMOGT";
+            DataLabel.Text = string.Empty;
 
             if (!string.IsNullOrEmpty(tipoInforme))
             {
@@ -46,11 +47,9 @@ namespace TuAppXamarin
                     case "Efectividad":
                         efectReport.ActualizarDatos(fechaBuscada, DataLabel, ErrorLabel, tipoInforme);
                         break;
-                    case "Venta por familia": 
-                        resMxFamReport.GenerarReporte(DataLabel, ErrorLabel, fechaBuscada, companiadm);
-                        break;
-                    default:
-                        ErrorLabel.Text = "Tipo de informe no reconocido";
+                    case "Venta por familia":
+                        var result = resMxFamReport.ObtenerDatos(fechaBuscada, companiadm);
+                        await Navigation.PushAsync(new ResMxFamReportPage(result, fechaBuscada)); // Asegúrate de pasar fechaBuscada
                         break;
                 }
             }

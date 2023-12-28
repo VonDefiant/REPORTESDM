@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SQLite;
 using Xamarin.Forms;
 
-namespace TuAppXamarin
+namespace TuAppXamarin  
 {
     public class efectivreport
     {
@@ -47,6 +48,19 @@ namespace TuAppXamarin
 
                 using (SQLiteConnection conn = new SQLiteConnection(path))
                 {
+
+                    // Nueva consulta para obtener la venta
+                    string ventaConsulta = $"SELECT 'Q ' || ROUND(SUM((MON_TOT - DET.MON_DSC) * 1.12), 2) AS VENTA " +
+                                            "FROM ERPADMIN_ALFAC_DET_PED DET " +
+                                            "JOIN ERPADMIN_ALFAC_ENC_PED ENC ON DET.NUM_PED = ENC.NUM_PED " +
+                                            "JOIN ERPADMIN_ARTICULO PROD ON PROD.COD_ART = DET.COD_ART " +
+                                            "WHERE ESTADO <> 'C' AND FEC_PED LIKE ? || '%' " +
+                                            "GROUP BY FEC_PED";
+
+                    // Obtener datos de venta
+                    var ventaResult = conn.ExecuteScalar<string>(ventaConsulta, fechaBuscada);
+
+
                     //cuenta los clientes con venta segun DB
                     var clientes = conn.Query<VisitaDocumento>("SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ?", fechaBuscada + "%");
                     int cuentaClientes = clientes.Count;
@@ -64,7 +78,6 @@ namespace TuAppXamarin
                     // subconsulta 
                     consulta = $"SELECT RUTA, " +
                                $"(SELECT COUNT(*) FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%' AND CLIENTE IN (SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%')) as 'pedidos_local', " +
-                               "ROUND(MONTO_PEDIDOS_LOCAL, 2) as 'Monto', " +
                                "(SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?) as 'ClientesRutero', " +
                                $"ROUND((SELECT COUNT(*) FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%' AND CLIENTE IN (SELECT CLIENTE FROM ERPADMIN_VISITA_DOCUMENTO WHERE INICIO LIKE ? || '%')) * 100.0 / (SELECT COUNT(DISTINCT COD_CLT) FROM ERPADMIN_ALFAC_RUTA_ORDEN WHERE DIA = ?), 2) || '%' as 'EfectividadVTA', " +
                                "(SELECT COUNT(*) FROM ERPADMIN_VISITA WHERE INICIO LIKE ? || '%') as 'VisitasRealizadas', " +
@@ -77,23 +90,25 @@ namespace TuAppXamarin
                     data = "";
                     foreach (var ruta in datosRutas)
                     {
-                        data += $"\nRuta: {ruta.RUTA,-25}\n";
-                        data += $"Pedidos: {ruta.pedidos_local}\n";
+                        data += $"\nFecha: {fechaBuscada}\n";
+                        data += $"Día: {diaSemana}\n";
+                        data += $"Ruta: {ruta.RUTA,-25}\n";
+                        data += $"\nPedidos: {ruta.pedidos_local}\n";
                         data += $"Clientes en el rutero: {ruta.ClientesRutero}\n";
                         data += $"Clientes con venta: {cuentaClientes}\n";
-                        data += $"Clientes visitados: {ruta.VisitasRealizadas} \n";
-                        data += $"Monto: Q{ruta.Monto} \n";
-                        data += $"Efectividad de ventas: {ruta.EfectividadVTA} \n";
+                        data += $"Clientes visitados: {ruta.VisitasRealizadas} \n";;
+                        data += $"Venta: {ventaResult}\n";
+                        data += $"\nEfectividad de ventas: {ruta.EfectividadVTA} \n";
 
                         // Calcular la efectividad de visita 
                         double efectividadVisita = (double)ruta.VisitasRealizadas / ruta.ClientesRutero * 100;
                         data += $"Efectividad de visita: {efectividadVisita.ToString("0.00")}% \n";
+                        data += $"Clientes con venta fuera de ruta: {cuenta}\n";
+                        data += $"Clientes visitados fuera de ruta: {cuentaVisita}\n";
                     }
 
-                    data += $"\nFecha: {fechaBuscada}\n";
-                    data += $"Día: {diaSemana}\n";
-                    data += $"Clientes con venta fuera de ruta: {cuenta}\n";
-                    data += $"Clientes visitados fuera de ruta: {cuentaVisita}\n";
+
+
 
                 }
                 dataLabel.Text = data;
