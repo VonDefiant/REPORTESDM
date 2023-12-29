@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REPORTESDM;
+using System;
 using System.IO;
 using Xamarin.Forms;
 
@@ -8,6 +9,7 @@ namespace TuAppXamarin
     {
         private efectivreport efectReport;
         private ResMxFamReport resMxFamReport;
+        private ResMxSKUReportA resMxSKUReport;
 
         public MainPage()
         {
@@ -24,6 +26,7 @@ namespace TuAppXamarin
 
             efectReport = new efectivreport(filePath);
             resMxFamReport = new ResMxFamReport(filePath);
+            resMxSKUReport = new ResMxSKUReportA(filePath); // Agrega esta línea para inicializar resMxSKUReport
         }
 
         private async void OnGenerarButtonClicked(object sender, EventArgs e)
@@ -48,8 +51,12 @@ namespace TuAppXamarin
                         efectReport.ActualizarDatos(fechaBuscada, DataLabel, ErrorLabel, tipoInforme);
                         break;
                     case "Venta por familia":
-                        var result = resMxFamReport.ObtenerDatos(fechaBuscada, companiadm);
-                        await Navigation.PushAsync(new ResMxFamReportPage(result, fechaBuscada)); // Asegúrate de pasar fechaBuscada
+                        var resultFamilia = resMxFamReport.ObtenerDatos(fechaBuscada, companiadm);
+                        await Navigation.PushAsync(new ResMxFamReportPage(resultFamilia, fechaBuscada)); // Asegúrate de pasar fechaBuscada
+                        break;
+                    case "Venta por SKU":
+                        var resultSKUA = resMxSKUReport.ObtenerDatos(fechaBuscada, companiadm);
+                        await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada)); // Asegúrate de pasar fechaBuscada
                         break;
                 }
             }

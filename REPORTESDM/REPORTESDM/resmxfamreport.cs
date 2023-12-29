@@ -47,30 +47,33 @@ namespace TuAppXamarin
         {
             // Corrige la cadena de consulta
             string consulta = @"
-                        SELECT 
-                            COD_FAM,
-                            CLA.DESCRIPCION,
-                            SUM(CNT_MAX + (CNT_MIN * 0.1)) AS UNIDADES,
-                            'Q ' || ROUND(SUM((MON_TOT - DET.MON_DSC) * 1.12), 2) AS VENTA,
-                            COUNT(DISTINCT COD_CLT) AS NUMERO_CLIENTES
-                        FROM 
-                            ERPADMIN_ALFAC_DET_PED DET
-                        JOIN 
-                            ERPADMIN_ALFAC_ENC_PED ENC ON DET.NUM_PED = ENC.NUM_PED
-                        JOIN 
-                            ERPADMIN_ARTICULO PROD ON PROD.COD_ART = DET.COD_ART
-                        JOIN 
-                            ERPADMIN_CLASIFICACION_FR CLA ON SUBSTR(PROD.COD_FAM, 1, 2) = CLA.CLASIFICACION
-                        WHERE 
-                            ESTADO <> 'C' AND FEC_PED LIKE ? || '%'
-                            AND COMPANIA = ?
-                        GROUP BY 
-                            COD_FAM, CLA.DESCRIPCION
-                    ";
+                SELECT 
+                    COD_FAM,
+                    CLA.DESCRIPCION,
+                    SUM(CNT_MAX + (CNT_MIN * 0.1)) AS UNIDADES,
+                    'Q ' || ROUND(SUM((MON_TOT - DET.MON_DSC) * 1.12), 2) AS VENTA,
+                    COUNT(DISTINCT COD_CLT) AS NUMERO_CLIENTES
+                FROM 
+                    ERPADMIN_ALFAC_DET_PED DET
+                JOIN 
+                    ERPADMIN_ALFAC_ENC_PED ENC ON DET.NUM_PED = ENC.NUM_PED
+                JOIN 
+                    ERPADMIN_ARTICULO PROD ON PROD.COD_ART = DET.COD_ART
+                JOIN 
+                    ERPADMIN_CLASIFICACION_FR CLA ON SUBSTR(PROD.COD_FAM, 1, 2) = CLA.CLASIFICACION
+                WHERE 
+                    ESTADO <> 'C' AND FEC_PED LIKE ? || '%'
+                    AND COMPANIA = ?
+                GROUP BY 
+                    COD_FAM, CLA.DESCRIPCION
+                HAVING
+                    SUM((MON_TOT - DET.MON_DSC) * 1.12) > 0
+            ";
 
             var datosConsulta = conn.Query<ReporteData>(consulta, fechaBuscada, companiadm);
             return datosConsulta;
         }
+
     }
 }
 

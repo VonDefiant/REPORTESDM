@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="resmxfamreport - Copia %282%29.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="resmxskumreport.xaml.cs">
+      <DependentUpon>resmxskumreport.xaml</DependentUpon>
+    </Compile>
     <Compile Update="resmxfamreport.xaml.cs">
       <DependentUpon>resmxfamreport.xaml</DependentUpon>
     </Compile>
@@ -28,6 +34,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="resmxfamreport.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ResMxSKUReportPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

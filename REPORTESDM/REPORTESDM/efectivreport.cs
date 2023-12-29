@@ -94,10 +94,10 @@ namespace TuAppXamarin
                         data += $"Día: {diaSemana}\n";
                         data += $"Ruta: {ruta.RUTA,-25}\n";
                         data += $"\nPedidos: {ruta.pedidos_local}\n";
+                        data += $"Venta: {ventaResult}\n";
                         data += $"Clientes en el rutero: {ruta.ClientesRutero}\n";
                         data += $"Clientes con venta: {cuentaClientes}\n";
                         data += $"Clientes visitados: {ruta.VisitasRealizadas} \n";;
-                        data += $"Venta: {ventaResult}\n";
                         data += $"\nEfectividad de ventas: {ruta.EfectividadVTA} \n";
 
                         // Calcular la efectividad de visita 
