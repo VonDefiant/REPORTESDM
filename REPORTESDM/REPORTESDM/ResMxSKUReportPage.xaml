@@ -11,14 +11,8 @@
     </ContentPage.BackgroundImageSource>
 
     <StackLayout>
-        <!-- Encabezado de la tabla -->
-        <Grid>
-            <Label Text="COD" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
-            <Label Text="DESCRIPCION" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
-            <Label Text="UNIDADES" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
-            <Label Text="VENTA" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
-            <Label Text="COBERTURAS" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
-        </Grid>
+        <Picker x:Name="SKUInformePicker" Title="Seleccione un proveedor" SelectedIndexChanged="OnPickerSelectedIndexChanged">
+        </Picker> 
 
         <!-- Contenido de la tabla -->
         <ListView x:Name="ReportListView">
@@ -26,12 +20,10 @@
                 <DataTemplate>
                     <ViewCell>
                         <Grid>
-                            <Label Text="{Binding COD_FAM}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
-                            <Label Text="{Binding DESCRIPCION}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
-                            <Label Text="{Binding UNIDADES}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
-                            <Label Text="{Binding VENTA}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
-                            <Label Text="{Binding NUMERO_CLIENTES}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand" />
-                            <Label Text="{Binding Source={x:Reference Name=ThisPage}, Path=BindingContext._fechaBuscada, StringFormat='Fecha: {0:d/M/yyyy}'}" FontAttributes="None" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                            <Label Text="{Binding DESCRIPCION}" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Label Text="{Binding UNIDADES}" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Label Text="{Binding VENTA}" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Label Text="{Binding NUMERO_COBERTURAS}" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

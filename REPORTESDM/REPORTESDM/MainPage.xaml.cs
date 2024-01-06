@@ -1,4 +1,5 @@
 ﻿using REPORTESDM;
+using SQLite;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -10,6 +11,7 @@ namespace TuAppXamarin
         private efectivreport efectReport;
         private ResMxFamReport resMxFamReport;
         private ResMxSKUReportA resMxSKUReport;
+        private SQLiteConnection _conn;
 
         public MainPage()
         {
@@ -24,10 +26,12 @@ namespace TuAppXamarin
                 filePath = "otra_ruta/FRM600.db"; // Reemplaza "otra_ruta" con la ubicación real
             }
 
+            _conn = new SQLiteConnection(filePath); // Inicializa _conn
             efectReport = new efectivreport(filePath);
             resMxFamReport = new ResMxFamReport(filePath);
             resMxSKUReport = new ResMxSKUReportA(filePath); // Agrega esta línea para inicializar resMxSKUReport
         }
+
 
         private async void OnGenerarButtonClicked(object sender, EventArgs e)
         {
@@ -56,7 +60,7 @@ namespace TuAppXamarin
                         break;
                     case "Venta por SKU":
                         var resultSKUA = resMxSKUReport.ObtenerDatos(fechaBuscada, companiadm);
-                        await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada)); // Asegúrate de pasar fechaBuscada
+                        await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada, _conn, companiadm));
                         break;
                 }
             }
