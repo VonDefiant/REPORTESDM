@@ -23,7 +23,7 @@
 
     <Button Text="Generar" TextColor="White" Clicked="OnGenerarButtonClicked"></Button>
     <Label x:Name="DataLabel" TextColor="White" FontSize="16" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
-    <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" />
+    <Label x:Name="ErrorLabel" TextColor="Red" FontSize="16" HeightRequest="100" VerticalTextAlignment="Center"/>
 
     </StackLayout>
 

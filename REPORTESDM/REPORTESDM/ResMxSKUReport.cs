@@ -101,8 +101,7 @@ namespace TuAppXamarin
                     SUM((MON_TOT - DET.MON_DSC) * 1.12) > 0
             ";
         }
-
-        private List<string> ObtenerDescripcionesClasificacion(SQLiteConnection conn, string fechaBuscada, string companiadm)
+        public List<string> ObtenerDescripcionesClasificacion(SQLiteConnection conn, string fechaBuscada, string companiadm)
         {
             string consultaClasificacion = ObtenerConsultaClasificacion();
 

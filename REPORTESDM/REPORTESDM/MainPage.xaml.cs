@@ -12,6 +12,7 @@ namespace TuAppXamarin
         private ResMxFamReport resMxFamReport;
         private ResMxSKUReportA resMxSKUReport;
         private SQLiteConnection _conn;
+        public string rutaSeleccionada;  
 
         public MainPage()
         {
@@ -29,17 +30,41 @@ namespace TuAppXamarin
             _conn = new SQLiteConnection(filePath); // Inicializa _conn
             efectReport = new efectivreport(filePath);
             resMxFamReport = new ResMxFamReport(filePath);
-            resMxSKUReport = new ResMxSKUReportA(filePath); // Agrega esta línea para inicializar resMxSKUReport
+            resMxSKUReport = new ResMxSKUReportA(filePath);
+
+
+            rutaSeleccionada = ObtenerRutaDesdeBD();
+        }
+
+        // Método para ejecutar la consulta y devolver la ruta
+        public string ObtenerRutaDesdeBD()
+        {
+            try
+            {
+                // Consulta SQL para obtener la ruta
+                string consulta = "SELECT RUTA FROM ERPADMIN_RUTA_CFG LIMIT 1";  // LIMIT 1 para obtener solo un resultado
+
+                // Ejecuta la consulta y obtén el resultado
+                var rutaSeleccionada = _conn.ExecuteScalar<string>(consulta);
+
+                return rutaSeleccionada;
+            }
+            catch (Exception ex)
+            {
+                // Maneja cualquier excepción que pueda ocurrir al ejecutar la consulta
+                Console.WriteLine("Error al obtener la ruta desde la base de datos: " + ex.Message);
+                return null;
+            }
         }
 
 
-        private async void OnGenerarButtonClicked(object sender, EventArgs e)
+        private async void OnGenerarButtonClicked(object sender, EventArgs e) 
         {
             // Obtener la fecha seleccionada del DatePicker
             DateTime fechaSeleccionada = FechaDatePicker.Date;
 
             // Formatear la fecha seleccionada como "M/d/yyyy"
-            string fechaBuscada = fechaSeleccionada.ToString("M/d/yyyy");
+            string fechaBuscada = fechaSeleccionada.ToString("M/d/yyyy");   
 
             // Obtener el tipo de informe seleccionado
             string tipoInforme = TipoInformePicker.SelectedItem?.ToString();
@@ -56,11 +81,11 @@ namespace TuAppXamarin
                         break;
                     case "Venta por familia":
                         var resultFamilia = resMxFamReport.ObtenerDatos(fechaBuscada, companiadm);
-                        await Navigation.PushAsync(new ResMxFamReportPage(resultFamilia, fechaBuscada)); // Asegúrate de pasar fechaBuscada
+                        await Navigation.PushAsync(new ResMxFamReportPage(resultFamilia, fechaBuscada, rutaSeleccionada)); 
                         break;
                     case "Venta por SKU":
                         var resultSKUA = resMxSKUReport.ObtenerDatos(fechaBuscada, companiadm);
-                        await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada, _conn, companiadm));
+                        await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada, _conn, companiadm, rutaSeleccionada));
                         break;
                 }
             }
