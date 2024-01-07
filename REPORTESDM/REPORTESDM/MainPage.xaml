@@ -17,6 +17,7 @@
                 <x:String>Efectividad</x:String>
                 <x:String>Venta por familia</x:String>
                 <x:String>Venta por SKU</x:String>
+                <x:String>Venta por pedido</x:String>
                 <!-- Agrega más tipos de informes según sea necesario -->
             </Picker.Items>
         </Picker>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TuAppXamarin.ResMxPEDReportPage">
+
+    <ContentPage.BackgroundImageSource>
+        <FileImageSource File="background.png" />
+    </ContentPage.BackgroundImageSource>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Encabezado de la tabla -->
+            <Grid>
+                <Label Text="NUM_PED" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                <Label Text="COD_CLT" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                <Label Text="NOM_CLT" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                <Label Text="CONDICION" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                <Label Text="TIPO_DOC" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+                <Label Text="MON_CIV" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" />
+            </Grid>
+
+            <!-- Contenido de la tabla -->
+            <ListView x:Name="ReportListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Label Text="{Binding NUM_PED}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                                <Label Text="{Binding COD_CLT}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                                <Label Text="{Binding NOM_CLT}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                                <Label Text="{Binding CONDICION}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                                <Label Text="{Binding TIPO_DOC}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                                <Label Text="{Binding MON_CIV}" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

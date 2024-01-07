@@ -11,6 +11,7 @@ namespace TuAppXamarin
         private efectivreport efectReport;
         private ResMxFamReport resMxFamReport;
         private ResMxSKUReportA resMxSKUReport;
+        private ResMxPedidoReport resMxPEDReport;
         private SQLiteConnection _conn;
         public string rutaSeleccionada;  
 
@@ -24,14 +25,14 @@ namespace TuAppXamarin
             // Si no se encuentra en la primera ubicación, intenta en la segunda
             if (!File.Exists(filePath))
             {
-                filePath = "otra_ruta/FRM600.db"; // Reemplaza "otra_ruta" con la ubicación real
+                filePath = "otra_ruta/FRM600.db"; 
             }
 
-            _conn = new SQLiteConnection(filePath); // Inicializa _conn
+            _conn = new SQLiteConnection(filePath); 
             efectReport = new efectivreport(filePath);
             resMxFamReport = new ResMxFamReport(filePath);
             resMxSKUReport = new ResMxSKUReportA(filePath);
-
+            resMxPEDReport = new ResMxPedidoReport(filePath);
 
             rutaSeleccionada = ObtenerRutaDesdeBD();
         }
@@ -86,6 +87,10 @@ namespace TuAppXamarin
                     case "Venta por SKU":
                         var resultSKUA = resMxSKUReport.ObtenerDatos(fechaBuscada, companiadm);
                         await Navigation.PushAsync(new ResMxSKUReport(resultSKUA, fechaBuscada, _conn, companiadm, rutaSeleccionada));
+                        break;
+                    case "Venta por pedido":
+                        var resultPedido = resMxPEDReport.ObtenerDatos(fechaBuscada, companiadm);
+                        await Navigation.PushAsync(new ResMxPEDReportPage(resultPedido, fechaBuscada, rutaSeleccionada));
                         break;
                 }
             }
